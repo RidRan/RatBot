@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import os
 
-TOKEN = os.eviron['TOKEN']
+TOKEN = os.environ['TOKEN']
 
 client = discord.Client()
 

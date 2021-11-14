@@ -10,12 +10,12 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content.startswith('rat'):
-        await client.send_message(message.channel, "Eeek!")
+        await client.send_message(message.channel, 'Eeek!')
     if message.author.voice:
         channel = message.author.voice.channel
         await channel.connect()
     else:
-        await client.send_message(message.channel, "Not in channel")
+        await client.send_message(message.channel, 'Not in channel')
         
 @client.event
 async def on_ready():

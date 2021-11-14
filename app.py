@@ -2,27 +2,35 @@ import discord
 from discord.ext import commands
 import os
 
-intents = discord.Intents.default()
-intents.members = True
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print('Logged in as')
+        print(self.user.name)
+        print(self.user.id)
+        print('------')
 
-TOKEN = os.environ['TOKEN']
+    async def on_message(self, message):
+        # we do not want the bot to reply to itself
+        if message.author.id == self.user.id:
+            return
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-There are a number of utility commands being showcased here.'''
+        if message.content.startswith('$guess'):
+            await message.channel.send('Guess a number between 1 and 10.')
 
-bot = commands.Bot(command_prefix='?', description=description, intents=intents)
+            def is_correct(m):
+                return m.author == message.author and m.content.isdigit()
 
-@bot.event
-async def on_ready():
-    print('Logged in as')
-    print(bot.user.name)
-    print(bot.user.id)
-    print('------')
+            answer = random.randint(1, 10)
 
-@bot.event
-async def on_message(message):
-    if bot.user != message.user:
-         await bot.send_message(message.channel, 'Eeek!')
+            try:
+                guess = await self.wait_for('message', check=is_correct, timeout=5.0)
+            except asyncio.TimeoutError:
+                return await message.channel.send('Sorry, you took too long it was {}.'.format(answer))
 
-bot.run(TOKEN)
+            if int(guess.content) == answer:
+                await message.channel.send('You are right!')
+            else:
+                await message.channel.send('Oops. It is actually {}.'.format(answer))
+
+client = MyClient()
+client.run(TOKEN)

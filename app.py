@@ -1,27 +1,24 @@
 import discord
+from discord.ext import commands
 import os
+
+intents = discord.Intents.default()
+intents.members = True
 
 TOKEN = os.environ['TOKEN']
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='?', description=description, intents=intents)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('rat'):
-        await client.send_message(message.channel, 'Eeek!')
-    if message.author.voice:
-        channel = message.author.voice.channel
-        await channel.connect()
-    else:
-        await client.send_message(message.channel, 'Not in channel')
-        
-@client.event
+@bot.event
 async def on_ready():
     print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    print(bot.user.name)
+    print(bot.user.id)
     print('------')
 
-client.run(TOKEN)
+@bot.event
+async def on_message(message):
+    if bot.user != message.user:
+         await bot.send_message(message.channel, 'Eeek!')
+
+bot.run(TOKEN)

@@ -8,11 +8,12 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
-    if message.author.voice:
-        channel = message.author.voice.channel
-        await channel.connect()
-    else:
-        await client.send_message(message.channel, "Not in channel")
+#     if message.author.voice:
+#         channel = message.author.voice.channel
+#         await channel.connect()
+#     else:
+#         await client.send_message(message.channel, "Not in channel")
+      await client.send_message(message.channel, message.content)
         
 @client.event
 async def on_ready():

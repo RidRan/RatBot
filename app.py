@@ -7,6 +7,10 @@ intents.members = True
 
 TOKEN = os.environ['TOKEN']
 
+description = '''An example bot to showcase the discord.ext.commands extension
+module.
+There are a number of utility commands being showcased here.'''
+
 bot = commands.Bot(command_prefix='?', description=description, intents=intents)
 
 @bot.event

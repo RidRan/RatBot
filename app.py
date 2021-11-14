@@ -13,5 +13,12 @@ async def on_message(message):
         await channel.connect()
     else:
         await client.send_message(message.channel, "Not in channel")
+        
+@client.event
+async def on_ready():
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
 
 client.run(TOKEN)

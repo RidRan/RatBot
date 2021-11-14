@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
-import datetime
+import os
 
-from urllib import parse, request
-import re
+TOKEN = os.eviron['TOKEN']
 
 client = discord.Client()
 
@@ -15,4 +14,4 @@ async def on_message(message):
     else:
         await client.send_message(message.channel, "Not in channel")
 
-client.run('token')
+client.run(TOKEN)

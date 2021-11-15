@@ -24,7 +24,11 @@ class MyClient(discord.Client):
 
                 await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
 
-                voice = self.client.voice_clients[0]
+                voices = self.voice_clients
+                voice = None
+                for v in voices:
+                    if v.guild.id == message.guild.id:
+                        voice = v
 
                 if voice and voice.is_connected():
                     await voice.move_to(channel)

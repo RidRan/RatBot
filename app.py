@@ -17,9 +17,12 @@ class MyClient(discord.Client):
             return
         if message.content.startswith('rat'):
             await message.channel.send('Eeek!')
-        if message.author.voice:
-            channel = message.author.voice.channel
-            await channel.connect()
+            if message.author.voice:
+                await message.channel.send('Joining ' + message.author.nick)
+                channel = message.author.voice.channel
+                await channel.connect()
+            else
+                await message.channel.send(message.author.nick + ' is not in a channel')
 
 client = MyClient()
 client.run(TOKEN)

@@ -19,7 +19,7 @@ class MyClient(discord.Client):
             reply = 'Nick: ' + message.author.name
             await message.channel.send(reply)
             if message.author.voice:
-                await message.channel.send('Joining ' + message.author.name)
+                await message.channel.send('Joining ' + message.author.name + ' in ' + message.author.voice.channel.name)
                 await message.author.voice.channel.connect()
             else:
                 await message.channel.send(message.author.name + ' is not in a channel')

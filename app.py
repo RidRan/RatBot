@@ -20,9 +20,10 @@ class MyClient(discord.Client):
             await message.channel.send(reply)
             if message.author.voice:
                 channel = message.author.voice.channel
-                voice = self.client.voice_clients
 
                 await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
+                
+                voice = self.client.voice_clients
 
                 if voice and voice.is_connected():
                     await voice.move_to(channel)

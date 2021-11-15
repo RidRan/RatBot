@@ -21,7 +21,7 @@ class MyClient(discord.Client):
                 await message.channel.send('Joining ' + message.author.nick)
                 channel = message.author.voice.channel
                 await channel.connect()
-            else
+            else:
                 await message.channel.send(message.author.nick + ' is not in a channel')
 
 client = MyClient()

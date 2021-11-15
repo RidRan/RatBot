@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import discord
 from discord.ext import commands
 import os
@@ -22,8 +23,12 @@ class MyClient(discord.Client):
                 channel = message.author.voice.channel
 
                 await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
-                
-                voice = self.client.voice_clients
+
+                voiceClients = self.client.voice_clients
+                voice = None
+                for voiceClient in voiceClients:
+                    if voiceClient.guild.id == message.guild.id:
+                        voice = voiceClient
 
                 if voice and voice.is_connected():
                     await voice.move_to(channel)

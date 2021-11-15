@@ -15,8 +15,8 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
-
-        await message.channel.send('Eeek!')
+        if message.content.startswith('rat'):
+            await message.channel.send('Eeek!')
 
 client = MyClient()
 client.run(TOKEN)

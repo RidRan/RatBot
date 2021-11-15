@@ -16,11 +16,19 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('rat'):
-            reply = 'Nick: ' + message.author.name
+            reply = 'Name: ' + message.author.name
             await message.channel.send(reply)
             if message.author.voice:
-                await message.channel.send('Joining ' + message.author.name + ' in ' + message.author.voice.channel.name)
-                await message.author.voice.channel.connect()
+                channel = message.author.voice.channel
+                voice = get(self.client.voice_clients, guild=message.guild)
+
+                await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
+                
+                if voice and voice.is_connected():
+                    await voice.move_to(channel)
+                else:
+                    voice = await channel.connect()
+
             else:
                 await message.channel.send(message.author.name + ' is not in a channel')
 

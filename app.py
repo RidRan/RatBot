@@ -5,6 +5,8 @@ import os
 
 TOKEN = os.environ['TOKEN']
 
+NOISE = 'scream.mp3'
+
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged in as')
@@ -32,6 +34,10 @@ class MyClient(discord.Client):
 
                 if voice and voice.is_connected():
                     await voice.move_to(channel)
+                    audio = self.FFmpegPCMAudio(NOISE)
+                    if not voice.is_playing():
+                        voice.play(audio, after=None)
+                        voice.disconnect()
                 else:
                     voice = await channel.connect()
 

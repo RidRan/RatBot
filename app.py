@@ -34,6 +34,7 @@ class MyClient(discord.Client):
 
                 if voice and voice.is_connected():
                     await voice.move_to(channel)
+                    print('Test')
                     audio = self.FFmpegPCMAudio(NOISE)
                     print('Playing' + NOISE)
                     print(audio)

@@ -36,6 +36,8 @@ class MyClient(discord.Client):
                     await voice.move_to(channel)
                     audio = self.FFmpegPCMAudio(NOISE)
                     if not voice.is_playing():
+                        print('Playing' + NOISE)
+                        print(audio)
                         voice.play(audio, after=None)
                         voice.disconnect()
                 else:

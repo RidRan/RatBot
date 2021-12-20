@@ -5,7 +5,7 @@ import os
 
 TOKEN = os.environ['TOKEN']
 
-NOISE = 'vuvuzela.mp3'
+NOISE = 'scream.mp3'
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -36,7 +36,7 @@ class MyClient(discord.Client):
                     await voice.move_to(channel)
                 else:
                     voice = await channel.connect()
-                audio = discord.FFmpegPCMAudio(NOISE, executable='./ffmpeg.exe')
+                audio = discord.FFmpegPCMAudio(NOISE, executable='./ffmpeg')
                 print('Playing' + NOISE)
                 voice.play(audio, after=None)
                 voice.disconnect()

@@ -18,12 +18,12 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('rat'):
-            reply = 'Name: ' + message.author.name
-            await message.channel.send(reply)
+            # reply = 'Name: ' + message.author.name
+            # await message.channel.send(reply)
             if message.author.voice:
                 channel = message.author.voice.channel
 
-                await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
+                # await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
 
                 voices = self.voice_clients
                 voice = None

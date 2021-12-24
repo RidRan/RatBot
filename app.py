@@ -4,7 +4,7 @@ import os
 
 TOKEN = os.environ['TOKEN']
 
-NOISE = 'screaml.mp3'
+NOISE = 'scream.mp3'
 
 class MyClient(discord.Client):
     async def on_ready(self):

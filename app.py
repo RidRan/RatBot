@@ -12,7 +12,7 @@ class MyClient(discord.Client):
     init = False
 
     async def on_ready(self):
-        print('Logged in as ' + self.user.name + ' (' + self.user.id + ')')
+        print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
 
     async def on_message(self, message):
         # we do not want the bot to reply to itself

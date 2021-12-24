@@ -38,7 +38,7 @@ class MyClient(discord.Client):
                 audio = discord.FFmpegPCMAudio(NOISE)
                 print('Playing' + NOISE)
                 voice.play(audio, after=None)
-                voice.disconnect()
+                await voice.disconnect()
 
             else:
                 await message.channel.send(message.author.name + ' is not in a channel')

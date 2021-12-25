@@ -7,9 +7,17 @@ TOKEN = os.environ['TOKEN']
 
 NOISE = 'scream.mp3'
 
-
 class MyClient(discord.Client):
     init = False
+
+    serverList = []
+    serverIndex = 0
+
+    def addServer(self, server):
+        for s in self.serverList:
+            if s.name == server.name:
+                return
+        self.serverList.append(server)
 
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
@@ -18,7 +26,11 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
-        if message.content.startswith('rat_init'):
+        if message.content.startswith('rat_test'):
+            for s in self.serverList:
+                print(s.name)
+        if message.content.startswith('rat_add'):
+            self.addServer(self, message.guild)
             # reply = 'Name: ' + message.author.name
             # await message.channel.send(reply)
 

@@ -10,14 +10,8 @@ NOISE = 'scream.mp3'
 class MyClient(discord.Client):
     init = False
 
-    serverList = []
+    serverSet = {}
     serverIndex = 0
-
-    def addServer(self, server):
-        for s in self.serverList:
-            if s.name == server.name:
-                return
-        self.serverList.append(server)
 
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
@@ -27,10 +21,10 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('rat_test'):
-            for s in self.serverList:
+            for s in self.serverSet:
                 print(s.name)
         if message.content.startswith('rat_add'):
-            self.addServer(self, message.guild)
+            self.serverSet.add(message.guild)
             # reply = 'Name: ' + message.author.name
             # await message.channel.send(reply)
 

@@ -10,7 +10,7 @@ NOISE = 'scream.mp3'
 class MyClient(discord.Client):
     init = False
 
-    serverSet = {}
+    serverSet = set()
     serverIndex = 0
 
     async def on_ready(self):

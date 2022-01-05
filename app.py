@@ -53,7 +53,7 @@ class MyClient(discord.Client):
                                 else:
                                     voice = await vc.connect()
 
-                                print('Joined ' + voice.name)
+                                print('Joined ' + vc.name)
 
                                 self.init = True
 
@@ -67,6 +67,8 @@ class MyClient(discord.Client):
                                     time.sleep(1) 
 
                                 await voice.disconnect()
+                            else:
+                                print(vc.name + " is not empty")
             else:
                 await message.channel.send('The Rat is already awake')
 

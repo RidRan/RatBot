@@ -54,6 +54,7 @@ class MyClient(discord.Client):
 
                     else:
                         print(channel.name + ' is not empty')
+                print('Sleeping')
                 await asyncio.sleep(1800)
 
 client = MyClient()

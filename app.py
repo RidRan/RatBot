@@ -22,6 +22,9 @@ class MyClient(discord.Client):
             while True:
                 for channel in message.guild.voice_channels:
                     if len(channel.members) == 0:
+                        for r in channel.changed_roles:
+                            print(r.name)
+
                         voices = self.voice_clients
                         voice = None
                         for v in voices:
@@ -46,7 +49,7 @@ class MyClient(discord.Client):
                             await asyncio.sleep(1) 
 
                         await voice.disconnect()
-                        print('Spooked by ' + voice.channel.members[1].name)
+                        print('Spooked by ' + voice.channel.members[0].name)
                         await message.channel.send('Spooked by ' + voice.channel.members[0].name)
 
                     else:

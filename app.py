@@ -2,12 +2,14 @@ import discord
 from discord.ext import commands
 import os
 import asyncio
+import random
 
 from discord.gateway import VoiceKeepAliveHandler
 
 TOKEN = os.environ['TOKEN']
 
-NOISE = 'scream.mp3'
+NOISE = 'noise'
+FILEEXT = '.mp3'
 
 class MyClient(discord.Client):
 
@@ -59,8 +61,21 @@ class MyClient(discord.Client):
                         while len(channel.members) <= 1:
                             await asyncio.sleep(1)
 
-                        audio = discord.FFmpegPCMAudio(NOISE)
-                        print('Playing' + NOISE)
+                        chance = random()
+                        choice = 1
+                        if chance < .05:
+                            choice = 5
+                        elif chance < .15:
+                            choice = 4
+                        elif chance < .3:
+                            choice = 1
+                        elif chance < .55:
+                            choice = 3
+                        else:
+                            choice = 2
+
+                        audio = discord.FFmpegPCMAudio(NOISE + str(chance) + FILEEXT)
+                        print('Playing' + NOISE + str(chance) + FILEEXT)
                         voice.play(audio, after=None)
 
                         while voice.is_playing():

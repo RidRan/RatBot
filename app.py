@@ -61,7 +61,7 @@ class MyClient(discord.Client):
                         while len(channel.members) <= 1:
                             await asyncio.sleep(1)
 
-                        chance = random()
+                        chance = random.random()
                         choice = 1
                         if chance < .05:
                             choice = 5

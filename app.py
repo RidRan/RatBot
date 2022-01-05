@@ -19,27 +19,28 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('rat'):
-            for channel in message.guild.voice_channels:
-                if len(channel.members) == 0:
-                    voice = await channel.connect()
+            while True:
+                for channel in message.guild.voice_channels:
+                    if len(channel.members) == 0:
+                        voice = await channel.connect()
 
-                    print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
+                        print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 
-                    # while len(channel.members) == 1:
-                    #     time.sleep(1)
+                        # while len(channel.members) == 1:
+                        #     time.sleep(1)
 
-                    audio = discord.FFmpegPCMAudio(NOISE)
-                    print('Playing' + NOISE)
-                    voice.play(audio, after=None)
+                        audio = discord.FFmpegPCMAudio(NOISE)
+                        print('Playing' + NOISE)
+                        voice.play(audio, after=None)
 
-                    while voice.is_playing():
-                        time.sleep(1) 
+                        while voice.is_playing():
+                            time.sleep(1) 
 
-                    await voice.disconnect()
-                    print('Spooked!')
+                        await voice.disconnect()
+                        print('Spooked!')
 
-                else:
-                    print(channel.name + ' is not empty')
+                    else:
+                        print(channel.name + ' is not empty')
 
 client = MyClient()
 client.run(TOKEN)

@@ -42,21 +42,21 @@ class MyClient(discord.Client):
                         print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 
                         while len(channel.members) <= 1:
-                            asyncio.sleep(1)
+                            await asyncio.sleep(1)
 
                         audio = discord.FFmpegPCMAudio(NOISE)
                         print('Playing' + NOISE)
                         voice.play(audio, after=None)
 
                         while voice.is_playing():
-                            asyncio.sleep(1) 
+                            await asyncio.sleep(1) 
 
                         await voice.disconnect()
                         print('Spooked by ' + len(voice.channel.members) + ' members')
 
                     else:
                         print(channel.name + ' is not empty')
-                asyncio.sleep(60)
+                await asyncio.sleep(60)
 
 client = MyClient()
 client.run(TOKEN)

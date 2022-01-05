@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-import time
+import asyncio
 
 from discord.gateway import VoiceKeepAliveHandler
 
@@ -41,22 +41,22 @@ class MyClient(discord.Client):
 
                         print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 
-                        # while len(channel.members) == 1:
-                        #     time.sleep(1)
+                        while len(channel.members) <= 1:
+                            asyncio.sleep(1)
 
                         audio = discord.FFmpegPCMAudio(NOISE)
                         print('Playing' + NOISE)
                         voice.play(audio, after=None)
 
                         while voice.is_playing():
-                            time.sleep(1) 
+                            asyncio.sleep(1) 
 
                         await voice.disconnect()
-                        print('Spooked!')
+                        print('Spooked by ' + len(voice.channel.members) + ' members')
 
                     else:
                         print(channel.name + ' is not empty')
-                time.sleep(60)
+                asyncio.sleep(60)
 
 client = MyClient()
 client.run(TOKEN)

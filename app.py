@@ -18,11 +18,24 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
+        if message.content.startswith('member_test'):
+            if message.author.voice:
+                for m in message.author.voice.channel.members:
+                    await message.channel.send(m.name)
         if message.content.startswith('rat'):
             while True:
                 for channel in message.guild.voice_channels:
                     if len(channel.members) == 0:
-                        voice = await channel.connect()
+                        voices = self.voice_clients
+                        voice = None
+                        for v in voices:
+                            if v.guild.id == message.guild.id:
+                                voice = v
+
+                        if voice and voice.is_connected():
+                            await voice.move_to(channel)
+                        else:
+                            voice = await channel.connect()
 
                         print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 

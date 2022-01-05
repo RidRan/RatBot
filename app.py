@@ -21,10 +21,7 @@ class MyClient(discord.Client):
         if message.content.startswith('rat'):
             while True:
                 for channel in message.guild.voice_channels:
-                    if len(channel.members) == 0:
-                        print('Changed roles:')
-                        for r in channel.changed_roles:
-                            print(r.name)
+                    if len(channel.members) == 0 and len(channel.changed_roles) == 0:
 
                         voices = self.voice_clients
                         voice = None
@@ -57,7 +54,7 @@ class MyClient(discord.Client):
                     else:
                         print(channel.name + ' is not empty')
                 print('Sleeping')
-                await asyncio.sleep(1800)
+                await asyncio.sleep(600)
 
 client = MyClient()
 client.run(TOKEN)

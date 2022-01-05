@@ -10,11 +10,6 @@ TOKEN = os.environ['TOKEN']
 NOISE = 'scream.mp3'
 
 class MyClient(discord.Client):
-    init = False
-
-    serverSet = set()
-    serverIndex = 0
-    channelIndex = 0
 
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
@@ -23,55 +18,28 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
-        if message.content.startswith('rat_test'):
-            voices = self.voice_clients
-            voice = None
-            for v in voices:
-                if v.guild.id == message.guild.id:
-                    voice = v
-            print(voice)
-            for s in self.serverSet:
-                print(s.name)
-        if message.content.startswith('rat_add'):
-            self.serverSet.add(message.guild)
-            # reply = 'Name: ' + message.author.name
-            # await message.channel.send(reply)
-        if message.content.startswith('rat_init'):
-            if self.init == False:
-                while True:
-                    for s in self.serverSet:
-                        for vc in s.voice_channels:
-                            if len(vc.members) == 0:
-                                voices = self.voice_clients
-                                voice = None
-                                for v in voices:
-                                    if v.guild.id == message.guild.id:
-                                        voice = v
+        if message.content.startswith('rat'):
+            while True:
+                for channel in message.guild.voice_channels:
+                    if len(channel.members) == 0:
+                        voice = await channel.connect()
 
-                                if voice and voice.is_connected():
-                                    await voice.move_to(vc)
-                                else:
-                                    voice = await vc.connect()
+                        print('Joined ' + channel.name + ' (' + len(channel.members) + ' members) in ' + channel.guild.name)
 
-                                print('Joined ' + vc.name + " (" + len(vc.members) + " members) in " + s.name)
+                        while len(channel.members) == 1:
+                            time.sleep(1)
 
-                                self.init = True
+                        audio = discord.FFmpegPCMAudio(NOISE)
+                        print('Playing' + NOISE)
+                        voice.play(audio, after=None)
+                        while voice.is_playing():
+                            time.sleep(1) 
 
-                                while len(vc.members) == 0:
-                                    time.sleep(1)
+                        await voice.disconnect()
+                        print('Spooked!')
 
-                                audio = discord.FFmpegPCMAudio(NOISE)
-                                print('Playing' + NOISE)
-                                voice.play(audio, after=None)
-                                while voice.is_playing():
-                                    time.sleep(1) 
-
-                                await voice.disconnect()
-                            else:
-                                print(vc.name + " is not empty")
-                    print("Looping back")
-            else:
-                await message.channel.send('The Rat is already awake')
+                    else:
+                        print(channel.name + ' is not empty')
 
 client = MyClient()
 client.run(TOKEN)

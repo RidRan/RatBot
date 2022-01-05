@@ -37,7 +37,7 @@ class MyClient(discord.Client):
         if message.content.startswith('sleepy'):
             delay = int(message.content.split(' ')[1])
             self.sleep = delay
-            print('Sleep delay set to ' + self.sleep + ' seconds')
+            print('Sleep delay set to ' + str(self.sleep) + ' seconds')
         if message.content.startswith('rat'):
             self.alive = True
             while self.alive:

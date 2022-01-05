@@ -3,6 +3,8 @@ from discord.ext import commands
 import os
 import time
 
+from discord.gateway import VoiceKeepAliveHandler
+
 TOKEN = os.environ['TOKEN']
 
 NOISE = 'scream.mp3'
@@ -39,7 +41,7 @@ class MyClient(discord.Client):
                                     if v.guild.id == s.id:
                                         voice = v
                                 
-                                print('Joining ' + vc.name)
+                                print('Joining ' + voice.name)
                                 await voice.move_to(vc)
 
                                 self.init = True

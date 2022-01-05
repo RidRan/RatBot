@@ -47,11 +47,11 @@ class MyClient(discord.Client):
 
                         await voice.disconnect()
                         print('Spooked by ' + voice.channel.members[1].name)
-                        await message.channel.send('Spooked by ' + voice.channel.members[1].name)
+                        await message.channel.send('Spooked by ' + voice.channel.members[0].name)
 
                     else:
                         print(channel.name + ' is not empty')
-                await asyncio.sleep(60)
+                await asyncio.sleep(1800)
 
 client = MyClient()
 client.run(TOKEN)

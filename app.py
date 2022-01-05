@@ -18,12 +18,6 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
-        if message.content.startswith('member_test'):
-            print('member test')
-            if message.author.voice:
-                for m in message.author.voice.channel.members:
-                    print(m.name)
-                    await message.channel.send(m.name)
         if message.content.startswith('rat'):
             while True:
                 for channel in message.guild.voice_channels:
@@ -52,7 +46,8 @@ class MyClient(discord.Client):
                             await asyncio.sleep(1) 
 
                         await voice.disconnect()
-                        print('Spooked by ' + str(len(voice.channel.members)) + ' members')
+                        print('Spooked by ' + voice.channel.members[1].name)
+                        await message.channel.send('Spooked by ' + voice.channel.members[1].name)
 
                     else:
                         print(channel.name + ' is not empty')

@@ -37,9 +37,10 @@ class MyClient(discord.Client):
                         for vc in s.voice_channels:
                             if len(vc.members) == 0:
                                 voice = None
-                                for v in self.voice_clients:
-                                    if v.guild.id == s.id:
-                                        voice = v
+                                voice = self.voice_clients[0]
+                                # for v in self.voice_clients:
+                                #     if v.guild.id == s.id:
+                                #         voice = v
                                 
                                 print('Joining ' + voice.name)
                                 await voice.move_to(vc)

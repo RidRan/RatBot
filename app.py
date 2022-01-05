@@ -74,8 +74,8 @@ class MyClient(discord.Client):
                         else:
                             choice = 2
 
-                        audio = discord.FFmpegPCMAudio(NOISE + str(chance) + FILEEXT)
-                        print('Playing' + NOISE + str(chance) + FILEEXT)
+                        audio = discord.FFmpegPCMAudio(NOISE + str(choice) + FILEEXT)
+                        print('Playing' + NOISE + str(choice) + FILEEXT)
                         voice.play(audio, after=None)
 
                         while voice.is_playing():

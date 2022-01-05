@@ -12,6 +12,7 @@ class MyClient(discord.Client):
 
     serverSet = set()
     serverIndex = 0
+    channelIndex = 0
 
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
@@ -27,34 +28,29 @@ class MyClient(discord.Client):
             self.serverSet.add(message.guild)
             # reply = 'Name: ' + message.author.name
             # await message.channel.send(reply)
-
+        if message.content.startswith('rat_init'):
             if self.init == False:
                 self.init = True
+                while True:
+                    for s in self.serverSet:
+                        for vc in s.voice_channels:
+                            if len(vc.members) == 0:
+                                voice = None
+                                for v in self.voice_clients:
+                                    if v.guild.id == s.id:
+                                        voice = v
+                                await voice.move_to(vc)
 
-                if message.author.voice:
-                    channel = message.author.voice.channel
+                                while (len(vc.members) == 0):
+                                    time.sleep(1)
 
-                    # await message.channel.send('Joining ' + message.author.name + ' in ' + channel.name)
-
-                    voices = self.voice_clients
-                    voice = None
-                    for v in voices:
-                        if v.guild.id == message.guild.id:
-                            voice = v
-
-                    if voice and voice.is_connected():
-                        await voice.move_to(channel)
-                    else:
-                        voice = await channel.connect()
-                    audio = discord.FFmpegPCMAudio(NOISE)
-                    print('Playing' + NOISE)
-                    voice.play(audio, after=None)
-                    while voice.is_playing():
-                        pass 
-                    await voice.disconnect()
-
-                else:
-                    await message.channel.send(message.author.name + ' is not in a channel')
+                                audio = discord.FFmpegPCMAudio(NOISE)
+                                print('Playing' + NOISE)
+                                voice.play(audio, after=None)
+                                while voice.is_playing():
+                                    time.sleep(1) 
+                                    
+                                await voice.disconnect()
             else:
                 await message.channel.send('The Rat is already awake')
 

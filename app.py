@@ -30,7 +30,6 @@ class MyClient(discord.Client):
             # await message.channel.send(reply)
         if message.content.startswith('rat_init'):
             if self.init == False:
-                self.init = True
                 while True:
                     for s in self.serverSet:
                         for vc in s.voice_channels:
@@ -39,7 +38,11 @@ class MyClient(discord.Client):
                                 for v in self.voice_clients:
                                     if v.guild.id == s.id:
                                         voice = v
+                                
+                                print('Joining ' + vc.name)
                                 await voice.move_to(vc)
+
+                                self.init = True
 
                                 while (len(vc.members) == 0):
                                     time.sleep(1)
@@ -49,7 +52,7 @@ class MyClient(discord.Client):
                                 voice.play(audio, after=None)
                                 while voice.is_playing():
                                     time.sleep(1) 
-                                    
+
                                 await voice.disconnect()
             else:
                 await message.channel.send('The Rat is already awake')

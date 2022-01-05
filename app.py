@@ -53,11 +53,11 @@ class MyClient(discord.Client):
                                 else:
                                     voice = await vc.connect()
 
-                                print('Joined ' + vc.name)
+                                print('Joined ' + vc.name + " (" + len(vc.members) + " members) in " + s.name)
 
                                 self.init = True
 
-                                while (len(vc.members) == 0):
+                                while len(vc.members) == 0:
                                     time.sleep(1)
 
                                 audio = discord.FFmpegPCMAudio(NOISE)
@@ -69,6 +69,7 @@ class MyClient(discord.Client):
                                 await voice.disconnect()
                             else:
                                 print(vc.name + " is not empty")
+                    print("Looping back")
             else:
                 await message.channel.send('The Rat is already awake')
 

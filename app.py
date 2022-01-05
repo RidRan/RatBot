@@ -24,7 +24,7 @@ class MyClient(discord.Client):
                     if len(channel.members) == 0:
                         voice = await channel.connect()
 
-                        print('Joined ' + channel.name + ' (' + len(channel.members) + ' members) in ' + channel.guild.name)
+                        print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 
                         while len(channel.members) == 1:
                             time.sleep(1)
@@ -32,6 +32,7 @@ class MyClient(discord.Client):
                         audio = discord.FFmpegPCMAudio(NOISE)
                         print('Playing' + NOISE)
                         voice.play(audio, after=None)
+
                         while voice.is_playing():
                             time.sleep(1) 
 

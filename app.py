@@ -25,8 +25,8 @@ class MyClient(discord.Client):
 
                     print('Joined ' + channel.name + ' (' + str(len(channel.members)) + ' members) in ' + channel.guild.name)
 
-                    while len(channel.members) == 1:
-                        time.sleep(1)
+                    # while len(channel.members) == 1:
+                    #     time.sleep(1)
 
                     audio = discord.FFmpegPCMAudio(NOISE)
                     print('Playing' + NOISE)

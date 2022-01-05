@@ -13,6 +13,8 @@ class MyClient(discord.Client):
 
     alive = True
 
+    sleep = 600
+
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
 
@@ -30,6 +32,10 @@ class MyClient(discord.Client):
 
             if voice and voice.is_connected():
                 await voice.disconnect()
+        if message.content.startswith('sleepy'):
+            delay = int(message.content.split(' ')[1])
+            self.sleep = delay
+            print('Sleep delay set to ' + self.sleep + ' seconds')
         if message.content.startswith('rat'):
             self.alive = True
             while self.alive:
@@ -71,7 +77,7 @@ class MyClient(discord.Client):
                     else:
                         print(channel.name + ' is not empty')
                 print('Sleeping')
-                await asyncio.sleep(600)
+                await asyncio.sleep(self.sleep)
 
 client = MyClient() 
 client.run(TOKEN)

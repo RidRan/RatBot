@@ -19,8 +19,10 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('member_test'):
+            print('member test')
             if message.author.voice:
                 for m in message.author.voice.channel.members:
+                    print(m.name)
                     await message.channel.send(m.name)
         if message.content.startswith('rat'):
             while True:

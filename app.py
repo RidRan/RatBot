@@ -22,6 +22,7 @@ class MyClient(discord.Client):
             while True:
                 for channel in message.guild.voice_channels:
                     if len(channel.members) == 0:
+                        print('Changed roles:')
                         for r in channel.changed_roles:
                             print(r.name)
 
@@ -31,6 +32,7 @@ class MyClient(discord.Client):
                             if v.guild.id == message.guild.id:
                                 voice = v
 
+                        print('Joining ' + channel.name)
                         if voice and voice.is_connected():
                             await voice.move_to(channel)
                         else:

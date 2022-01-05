@@ -52,7 +52,7 @@ class MyClient(discord.Client):
                             await asyncio.sleep(1) 
 
                         await voice.disconnect()
-                        print('Spooked by ' + len(voice.channel.members) + ' members')
+                        print('Spooked by ' + str(len(voice.channel.members)) + ' members')
 
                     else:
                         print(channel.name + ' is not empty')

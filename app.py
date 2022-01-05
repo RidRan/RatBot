@@ -54,6 +54,7 @@ class MyClient(discord.Client):
 
                     else:
                         print(channel.name + ' is not empty')
+                time.sleep(60)
 
 client = MyClient()
 client.run(TOKEN)

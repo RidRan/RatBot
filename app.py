@@ -24,6 +24,12 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         if message.content.startswith('rat_test'):
+            voices = self.voice_clients
+            voice = None
+            for v in voices:
+                if v.guild.id == message.guild.id:
+                    voice = v
+            print(voice)
             for s in self.serverSet:
                 print(s.name)
         if message.content.startswith('rat_add'):
@@ -37,7 +43,6 @@ class MyClient(discord.Client):
                         for vc in s.voice_channels:
                             if len(vc.members) == 0:
                                 voice = None
-                                print(self.user.name)
                                 print(len(self.voice_clients))
                                 voice = self.voice_clients[0]
                                 # for v in self.voice_clients:

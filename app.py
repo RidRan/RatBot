@@ -42,15 +42,18 @@ class MyClient(discord.Client):
                     for s in self.serverSet:
                         for vc in s.voice_channels:
                             if len(vc.members) == 0:
+                                voices = self.voice_clients
                                 voice = None
-                                print(len(self.voice_clients))
-                                voice = self.voice_clients[0]
-                                # for v in self.voice_clients:
-                                #     if v.guild.id == s.id:
-                                #         voice = v
-                                
-                                print('Joining ' + voice.name)
-                                await voice.move_to(vc)
+                                for v in voices:
+                                    if v.guild.id == message.guild.id:
+                                        voice = v
+
+                                if voice and voice.is_connected():
+                                    await voice.move_to(vc)
+                                else:
+                                    voice = await vc.connect()
+
+                                print('Joined ' + voice.name)
 
                                 self.init = True
 

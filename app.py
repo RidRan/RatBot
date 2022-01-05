@@ -11,6 +11,8 @@ NOISE = 'scream.mp3'
 
 class MyClient(discord.Client):
 
+    alive = True
+
     async def on_ready(self):
         print('Logged in as ' + self.user.name + ' (' + str(self.user.id) + ')')
 
@@ -18,8 +20,19 @@ class MyClient(discord.Client):
         # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
             return
+        if message.content.startswith('kill rat'):
+            self.alive = False
+            voices = self.voice_clients
+            voice = None
+            for v in voices:
+                if v.guild.id == message.guild.id:
+                    voice = v
+
+            if voice and voice.is_connected():
+                await voice.disconnect()
         if message.content.startswith('rat'):
-            while True:
+            self.alive = True
+            while self.alive:
                 for channel in message.guild.voice_channels:
                     if len(channel.members) == 0 and len(channel.changed_roles) == 0:
 
@@ -48,13 +61,17 @@ class MyClient(discord.Client):
                             await asyncio.sleep(1) 
 
                         await voice.disconnect()
-                        print('Spooked by ' + voice.channel.members[0].name)
-                        await message.channel.send('Spooked by ' + voice.channel.members[0].name)
-
+                        
+                        for m in voice.channel.members:
+                            if m.name != 'RatBot':
+                                await message.channel.send('Spooked by ' + m.name)
+                                print('Spooked by ' + m.name)
+                                break
+                        
                     else:
                         print(channel.name + ' is not empty')
                 print('Sleeping')
                 await asyncio.sleep(600)
 
-client = MyClient()
+client = MyClient() 
 client.run(TOKEN)

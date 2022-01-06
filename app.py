@@ -38,6 +38,8 @@ class MyClient(discord.Client):
             delay = int(message.content.split(' ')[1])
             self.sleep = delay
             print('Sleep delay set to ' + str(self.sleep) + ' seconds')
+        if message.content.startswith('daddy'):
+            await message.channel.send('Cameron Collingham')
         if message.content.startswith('rat'):
             self.alive = True
             while self.alive:
